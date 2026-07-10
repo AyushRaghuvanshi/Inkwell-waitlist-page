@@ -1,0 +1,73 @@
+/* ============================================================
+   Inkwell — Waitlist landing page
+   ============================================================ */
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: #F6F1E4;
+  color: #2B2620;
+  font-family: Literata, Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+
+a {
+  color: #2F4C7A;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(47, 76, 122, 0.35);
+}
+
+a:hover {
+  color: #B23A3A;
+  border-bottom-color: rgba(178, 58, 58, 0.4);
+}
+
+::selection { background: #F5D949; }
+
+@keyframes drawDown {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+@keyframes markerCircle {
+  from { stroke-dashoffset: 640; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ---- Waitlist inputs & buttons (focus / hover states) ---- */
+
+.wl-input:focus {
+  border-bottom-color: #2F4C7A;
+  outline: 2px dashed #2F4C7A;
+  outline-offset: 4px;
+}
+
+.wl-btn:focus {
+  outline: 2px dashed #2F4C7A;
+  outline-offset: 3px;
+}
+
+.wl-btn:hover .marker-path {
+  animation: markerCircle .4s ease;
+}
+
+/* ---- Reveal-on-scroll cue elements ---- */
+
+.cue-hidden {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.cue-shown {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-draw] { animation: none !important; transform: none !important; }
+  .cue-hidden { opacity: 1 !important; transform: none !important; }
+}
