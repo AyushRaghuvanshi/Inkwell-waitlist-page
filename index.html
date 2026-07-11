@@ -6,6 +6,28 @@
 <title>Inkwell — Turn any lecture into notes you'd actually study from</title>
 <meta name="description" content="Paste a YouTube link, a recording, or a slide deck. Inkwell reads it and hands you back a real notebook — chapters, flashcards, exam questions, and diagrams, each tied to the exact moment it happened.">
 
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<!-- ============================================================
+     Microsoft Clarity — traffic + scroll-depth analytics
+     1. Go to https://clarity.microsoft.com  →  create a project
+     2. Copy the Project ID (Settings → Overview, looks like "abcd1234ef")
+     3. Paste it below in place of PASTE_YOUR_CLARITY_ID
+     Until you do, this stays a no-op and nothing loads.
+     ============================================================ -->
+<script>
+  (function () {
+    var CLARITY_PROJECT_ID = "xkky0vnwn9";
+    if (!CLARITY_PROJECT_ID || CLARITY_PROJECT_ID.indexOf("PASTE_") === 0) return;
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", CLARITY_PROJECT_ID);
+  })();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Permanent+Marker&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400;1,7..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -298,6 +320,16 @@
     </div>
   </section>
 
+</div>
+
+<!-- privacy / cookie notice -->
+<div id="privacy-note" class="privacy-note" role="region" aria-label="Privacy notice" hidden>
+  <div style="font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#B23A3A;margin-bottom:6px">PRIVACY</div>
+  <p style="margin:0 0 12px;font-size:14px;line-height:1.5;color:#2B2620">We use <a href="https://clarity.microsoft.com/">Microsoft Clarity</a> — cookies and anonymized analytics — to see how this page is used and make it better. No ads, and we never sell your data.</p>
+  <div style="display:flex;align-items:center;gap:18px">
+    <button id="privacy-ok" type="button" class="wl-btn" style="background:transparent;border:0;cursor:pointer;font-family:'Permanent Marker',cursive;font-size:15px;color:#2F4C7A;padding:2px">Got it →</button>
+    <a href="#" style="font-family:'Space Mono',monospace;font-size:11px;color:#8C8578;border-bottom-color:rgba(140,133,120,.4)">Privacy policy</a>
+  </div>
 </div>
 
 <script src="script.js"></script>

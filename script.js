@@ -111,10 +111,80 @@
     nodes.forEach(function (n) { io.observe(n); });
   }
 
+  /* ---------- scroll-depth tracking ---------- */
+
+  // Fires a custom event into whatever analytics is present as the visitor
+  // passes each depth milestone. Clarity picks these up as taggable events;
+  // GA/Plausible/PostHog would too if you swap the provider.
+  function track(eventName, percent) {
+    try {
+      if (window.clarity) {
+        window.clarity('event', eventName);
+        window.clarity('set', 'max_scroll', String(percent));
+      }
+      // window.gtag && gtag('event', 'scroll_depth', { percent: percent });
+      // window.plausible && plausible(eventName);
+      // window.posthog && posthog.capture('scroll_depth', { percent: percent });
+    } catch (e) {}
+  }
+
+  function setupScrollDepth() {
+    var milestones = [25, 50, 75, 100];
+    var fired = {};
+    var ticking = false;
+
+    function measure() {
+      ticking = false;
+      var doc = document.documentElement;
+      var scrollable = doc.scrollHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      var pct = Math.min(100, Math.round(((window.pageYOffset || doc.scrollTop) / scrollable) * 100));
+      for (var i = 0; i < milestones.length; i++) {
+        var m = milestones[i];
+        if (pct >= m && !fired[m]) {
+          fired[m] = true;
+          track('scrolled-' + m, m);
+        }
+      }
+      if (fired[100]) window.removeEventListener('scroll', onScroll);
+    }
+
+    function onScroll() {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(measure); }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    measure(); // catch short pages already fully visible
+  }
+
+  /* ---------- privacy / cookie notice ---------- */
+
+  function setupPrivacyNote() {
+    var note = $('privacy-note');
+    if (!note) return;
+
+    var acked = false;
+    try { acked = localStorage.getItem('inkwell_privacy_ack') === '1'; } catch (e) {}
+    if (acked) return; // already dismissed — leave it hidden
+
+    note.hidden = false;
+
+    var ok = $('privacy-ok');
+    if (ok) {
+      ok.addEventListener('click', function () {
+        try { localStorage.setItem('inkwell_privacy_ack', '1'); } catch (e) {}
+        note.classList.add('is-leaving');
+        setTimeout(function () { note.hidden = true; }, 300);
+      });
+    }
+  }
+
   /* ---------- wire up ---------- */
 
   function init() {
     if (!reduce) setupReveal();
+    setupScrollDepth();
+    setupPrivacyNote();
 
     var heroBtn = $('join-hero');
     var footBtn = $('join-foot');

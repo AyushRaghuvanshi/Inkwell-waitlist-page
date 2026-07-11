@@ -71,3 +71,47 @@ a:hover {
   [data-draw] { animation: none !important; transform: none !important; }
   .cue-hidden { opacity: 1 !important; transform: none !important; }
 }
+
+/* ---- Privacy / cookie notice ---- */
+
+.privacy-note {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  width: min(330px, calc(100vw - 32px));
+  background: #FFFDF6;
+  color: #2B2620;
+  border: 1px solid rgba(43, 38, 32, .16);
+  box-shadow: 0 10px 26px rgba(43, 38, 32, .18);
+  border-radius: 3px;
+  padding: 16px 18px;
+  transform: rotate(-1.2deg);
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+/* washi-tape strip across the top */
+.privacy-note::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 76px;
+  height: 20px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(245, 217, 73, .55);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+}
+
+.privacy-note[hidden] { display: none; }
+
+.privacy-note.is-leaving {
+  opacity: 0;
+  transform: rotate(-1.2deg) translateY(14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .privacy-note { transform: none; transition: opacity .2s ease; }
+  .privacy-note::before { transform: translateX(-50%); }
+  .privacy-note.is-leaving { transform: none; }
+}
